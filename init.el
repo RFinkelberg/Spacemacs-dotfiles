@@ -34,10 +34,9 @@ values."
      themes-megapack
      vimscript
      python
-     javascript
      markdown
      html
-     xkcd
+     ;; xkcd
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -53,17 +52,21 @@ values."
      org
      scala
      (shell :variables
-            shell-default-height 30
+            shell-default-height 15
             shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      android-mode
+                                      matlab-mode
+                                      gradle-mode
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -136,20 +139,20 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         gruvbox
+                         subatomic
                          monokai
+                         planet
                          phoenix-dark-pink
                          tao-yin
-                         subatomic
-                         gruvbox
-                         planet
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("DejaVu LGC Sans Mono"
-                               :size 15  ;; was Inconsolata size 16
-                               :weight normal
+                               :size 15 ;; was Inconsolata size 16
+                               :weight semi-bold
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -260,11 +263,11 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling nil
+   dotspacemacs-smooth-scrolling t
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers 'relative
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -314,7 +317,22 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (golden-ratio-mode 1)
+  (setq latex-run-command "xelatex")
+  (setq eclim-eclipse-dirs "c:/eclipse"
+        eclim-executable "c:/eclipse/eclim.bat")
+  (setq neo-theme 'nerd)
+  ;; regular auto-complete initialization
+  (require 'auto-complete-config)
+  (ac-config-default)
+
+  ;; add the emacs-eclim source
+  (require 'ac-emacs-eclim-source)
+  (ac-emacs-eclim-config)
+
+  ;; (require 'company)
+  ;; (require 'company-emacs-eclim)
+  ;; (company-emacs-eclim-setup)
+  ;; (global-company-mode t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
