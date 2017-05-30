@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     octave
      themes-megapack
      vimscript
      python
@@ -51,11 +52,11 @@ values."
      java
      org
      scala
-     (shell :variables
-            shell-default-height 15
-            shell-default-position 'bottom)
+     ;; (shell :variables
+     ;;        shell-default-height 15
+     ;;        shell-default-position 'bottom)
      ;; spell-checking
-     syntax-checking
+     ;; syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -65,7 +66,9 @@ values."
    dotspacemacs-additional-packages '(
                                       android-mode
                                       matlab-mode
+                                      cedet
                                       gradle-mode
+                                      groovy-mode
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -150,9 +153,9 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("DejaVu LGC Sans Mono"
-                               :size 15 ;; was Inconsolata size 16
-                               :weight semi-bold
+   dotspacemacs-default-font '("InputMono"
+                               :size 14 ;; was Inconsolata size 16
+                               :weight normal
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -321,6 +324,8 @@ you should place your code here."
   (setq eclim-eclipse-dirs "c:/eclipse"
         eclim-executable "c:/eclipse/eclim.bat")
   (setq neo-theme 'nerd)
+
+  (setq python-shell-interpreter "c:/ProgramData/Anaconda2/Scripts/ipython.exe")
   ;; regular auto-complete initialization
   (require 'auto-complete-config)
   (ac-config-default)
@@ -333,6 +338,8 @@ you should place your code here."
   ;; (require 'company-emacs-eclim)
   ;; (company-emacs-eclim-setup)
   ;; (global-company-mode t)
+  (require 'gradle-mode)
+  (add-hook 'java-mode-hook '(lambda() (gradle-mode 1)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
