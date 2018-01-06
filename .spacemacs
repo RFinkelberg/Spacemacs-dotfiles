@@ -31,32 +31,51 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     octave
-     themes-megapack
-     vimscript
+     (themes-megapack :packages
+                      gruvbox-theme
+                      planet-theme
+                      phoenix-dark-pink-theme
+                      phoenix-dark-mono-theme
+                      tao-theme
+                      zenburn-theme
+                      busybee-theme
+                      hc-zenburn-theme
+                      darkburn-theme
+                      darktooth-theme
+                      obsidian-theme
+                      twilight-theme
+                      ;; niflheim-theme
+                      bubbleberry-theme
+                      material-theme
+                      minimal-theme
+                      subatomic-theme)
+     ;; themes-megapack
+     colors
+     ;; vim-powerline
      python
      markdown
      html
+     c-c++
      ;; xkcd
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; helm
-     ivy
+     helm
+     ;; ivy
      auto-completion
      ;; better-defaults
      emacs-lisp
      git
      java
      org
-     scala
+     latex
      ;; (shell :variables
      ;;        shell-default-height 15
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -64,11 +83,9 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      android-mode
-                                      matlab-mode
+                                      ;; dash
+                                      ;; autothemer
                                       cedet
-                                      gradle-mode
-                                      groovy-mode
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -116,7 +133,7 @@ values."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'hybrid
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -147,17 +164,27 @@ values."
                          monokai
                          planet
                          phoenix-dark-pink
+                         phoenix-dark-mono
                          tao-yin
+                         busybee
+                         wombat
+                         hc-zenburn
+                         bubbleberry
+                         darktooth
+                         obsidian
+                         twilight
+                         material
+                         minimal
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("InputMono"
-                               :size 14 ;; was Inconsolata size 16
+   dotspacemacs-default-font '("Fira Code Retina"
+                               :size 28 ;; was Inconsolata size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.1) ;; was 1.1
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -212,7 +239,7 @@ values."
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
+   dotspacemacs-helm-resize 1
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
    dotspacemacs-helm-no-header nil
@@ -266,11 +293,11 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -311,6 +338,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; (load-file "~/spacemacs/dash.el")
+  ;; (load-file "~/spacemacs/autothemer.el")
+  (load-file "~/.emacs.d/elpa/dash-20170810.137/dash.el")
+  (load-file "~/.emacs.d/elpa/autothemer-20170112.1324/autothemer.el")
   )
 
 (defun dotspacemacs/user-config ()
@@ -321,25 +352,40 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq latex-run-command "xelatex")
-  (setq eclim-eclipse-dirs "c:/eclipse"
-        eclim-executable "c:/eclipse/eclim.bat")
   (setq neo-theme 'nerd)
 
-  (setq python-shell-interpreter "c:/ProgramData/Anaconda2/Scripts/ipython.exe")
   ;; regular auto-complete initialization
-  (require 'auto-complete-config)
-  (ac-config-default)
+  ;; (require 'auto-complete-config)
+  ;; (ac-config-default)
 
-  ;; add the emacs-eclim source
-  (require 'ac-emacs-eclim-source)
-  (ac-emacs-eclim-config)
+  (defun random-list-element (arg-list)
+    (nth (random (length arg-list)) arg-list))
+  (spacemacs/load-theme (random-list-element  dotspacemacs-themes))  ;; add the emacs-eclim source
 
+  ;; (require 'ac-emacs-eclim-source)
+  ;; (ac-emacs-eclim-config)
+  ;; ;; (setq explicit-shell-file-name "C:/Windows/System32/wsl.exe")
+  ;; (setq shell-file-name "bash")
+  ;; (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
+  ;; (setenv "SHELL" shell-file-name)
+  ;; (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+  (spacemacs|disable-company latex-mode)
   ;; (require 'company)
   ;; (require 'company-emacs-eclim)
   ;; (company-emacs-eclim-setup)
-  ;; (global-company-mode t)
-  (require 'gradle-mode)
-  (add-hook 'java-mode-hook '(lambda() (gradle-mode 1)))
+  (global-company-mode t)
+  ;; (require 'gradle-mode)
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+ ;; (add-hook 'java-mode-hook '(lambda() (gradle-mode 1)))
+
+
+;;   " eval to fix ipython
+;; (defun python-shell-parse-command ()
+;;   (let ((exec-path (python-shell-calculate-exec-path)))
+;;     (format "%s %s"
+;;             (executable-find python-shell-interpreter)
+;;             python-shell-interpreter-args)))
+;; "
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -349,10 +395,15 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   (quote
+    (rainbow-mode rainbow-identifiers color-identifiers-mode flycheck-pos-tip pos-tip flycheck powerline org-category-capture alert dash-functional helm helm-core projectile bind-key packed avy anaconda-mode eclim yasnippet company iedit smartparens evil goto-chg markdown-mode magit magit-popup git-commit ghub async with-editor dash hydra f haml-mode s thrift stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode x86-lookup nasm-mode phpunit phpcbf php-auto-yasnippets drupal-mode php-mode zonokai-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme zenburn-theme counsel swiper ivy company-auctex auctex-latexmk auctex helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag disaster company-c-headers cmake-mode clang-format ace-jump-helm-line yapfify ws-butler winum which-key wgrep web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tao-theme tagedit subatomic-theme spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin planet-theme pip-requirements phoenix-dark-pink-theme persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint less-css-mode ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make gruvbox-theme gradle-mode google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav dumb-jump define-word cython-mode counsel-projectile company-web company-statistics company-emacs-eclim company-anaconda column-enforce-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#292b2e" :foreground "#b2b2b2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "Inconsolata")))))
+ '(default ((t (:family "InputMono" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
