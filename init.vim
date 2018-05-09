@@ -191,3 +191,5 @@ inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
 
 let g:startify_custom_header = []
+
+nnoremap <Leader>g :Gstatus<CR>
