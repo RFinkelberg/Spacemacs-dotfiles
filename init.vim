@@ -88,6 +88,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'arcticicestudio/nord-vim'
+Plug 'tpope/vim-fugitive'
 " if has('nvim')
 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " else
@@ -104,6 +105,7 @@ Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'lervag/vimtex', { 'for': 'tex' }
 " Initialize plugin system
 call plug#end()
 
@@ -146,7 +148,8 @@ set autochdir
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 
-noremap <Leader>w :w<CR>
+nnoremap <Leader>w :w<CR>
+inoremap <Leader>w :w<CR>
 
 set colorcolumn=80
 
@@ -184,7 +187,7 @@ function! Tab_Or_Complete()
     return "\<Tab>"
   endif
 endfunction
-autocmd FileType python inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
 
-
+let g:startify_custom_header = []
