@@ -40,8 +40,16 @@ set noshowmode
 " \ 'colorscheme': 'wombat',
 " \ }
 " let g:lightline = { 'colorscheme': 'gruvbox' }
-let g:lightline = { 'colorscheme': 'nord' }
-
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 set background=dark
 
