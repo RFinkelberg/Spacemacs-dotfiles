@@ -51,6 +51,11 @@ let g:lightline = {
       \ },
       \ }
 
+let g:lightline.mode_map         = {
+      \ 'n': 'N', 'i': 'I', 'R': 'R', 'v': 'V', 'V': 'V', "\<C-v>": 'V',
+      \ 'c': 'C', 's': 'S', 'S': 'S', "\<C-s>": 'S', 't': 'T',
+\ }
+
 set background=dark
 
 " tabs -> 4 spaces
@@ -82,12 +87,12 @@ call plug#begin('~/.nvim/plugged')
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' } 
 " Any valid git URL is allowed
 "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " Multiple Plug commands can be written in a single line using | separators
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
 Plug 'tpope/vim-sensible'
 Plug 'morhetz/gruvbox'
@@ -97,6 +102,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-fugitive'
+Plug 'robertmeta/nofrils'
+" Plug 'markonm/traces.vim'
 " if has('nvim')
 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " else
@@ -104,7 +111,7 @@ Plug 'tpope/vim-fugitive'
 "   Plug 'roxma/nvim-yarp'
 "   Plug 'roxma/vim-hug-neovim-rpc'
 " endif
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'mhinz/vim-startify'
 " Plug 'https://github.com/ctrlpvim/ctrlp.vim.git', {'on': 'CtrlP'}
 " Plug 'SirVer/ultisnips'
@@ -117,7 +124,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 " Initialize plugin system
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " wildmenu for better command completion
 set wildmenu
 set wildmode=full
@@ -146,12 +153,17 @@ set autoindent
 set ttyfast
 
 " colorscheme gruvbox 
-colorscheme nord
+" colorscheme nord
+colorscheme nofrils-dark
+let g:nofrils_strbackgrounds = 1
+" let g:nofrils_heavycomments = 1
+
 " save all buffers when losing focus
 au FocusLost * :wa
 au FocusGained * :redraw!
 
-set autochdir
+" auto cd to dir of current file
+autocmd BufEnter * silent! lcd %:p:h
 
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
@@ -195,9 +207,24 @@ function! Tab_Or_Complete()
     return "\<Tab>"
   endif
 endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+inoremap <silent> <Tab> <C-R>=Tab_Or_Complete()<CR>
+" autocmd FileType python inoremap <Tab> <Tab>
 set dictionary="/usr/dict/words"
 
 let g:startify_custom_header = []
 
 nnoremap <Leader>g :Gstatus<CR>
+
+
+" ultisnips config
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:nord_comment_brightness = 10
+
+noremap <silent> <Leader><ESC> :noh<CR>
+
+nnoremap <Backspace> <C-^>
+
+let g:ale_lint_on_text_changed = 'never'

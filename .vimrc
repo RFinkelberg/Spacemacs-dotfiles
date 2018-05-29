@@ -21,12 +21,13 @@ call plug#begin('~/.vim/plugged')
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' } 
+Plug 'tpope/vim-rsi'
 " Any valid git URL is allowed
 "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
 "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
@@ -76,7 +77,6 @@ map <C-n> :NERDTreeToggle<CR>
 " colorscheme gruvbox
 " let g:gruvbox_contrast_dark = 'hard'
 " colorscheme challenger_deep
-" set background=dark
 colorscheme PaperColor 
 let g:PaperColor_Theme_Options = {
   \   'language': {
@@ -187,7 +187,7 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:vimtex_view_enabled = 0
 
 " auto cd to dir of current file
-set autochdir
+autocmd BufEnter * silent! lcd %:p:h
 
 " highlight virtual column 80 to spot longer lines
 set colorcolumn=80
@@ -209,7 +209,10 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
 	\   'left': '', 'right': '' 
   \}
-
+let g:lightline.mode_map         = {
+      \ 'n': 'N', 'i': 'I', 'R': 'R', 'v': 'V', 'V': 'V', "\<C-v>": 'V',
+      \ 'c': 'C', 's': 'S', 'S': 'S', "\<C-s>": 'S', 't': 'T',
+\ }
 " disable startify cowsay header
 let g:startify_custom_header = []
 
@@ -230,3 +233,5 @@ function! Tab_Or_Complete()
 endfunction
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
+
+nnoremap <Backspace> <C-^>
