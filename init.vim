@@ -41,7 +41,7 @@ set noshowmode
 " \ }
 " let g:lightline = { 'colorscheme': 'gruvbox' }
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -87,7 +87,7 @@ call plug#begin('~/.nvim/plugged')
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' } 
 " Any valid git URL is allowed
 "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -95,14 +95,17 @@ Plug 'junegunn/vim-easy-align'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
 Plug 'tpope/vim-sensible'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-vinegar'
 Plug 'morhetz/gruvbox'
-Plug 'justinmk/vim-sneak'
-Plug 'itchyny/lightline.vim'
+" Plug 'justinmk/vim-sneak'
+" Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'arcticicestudio/nord-vim'
+Plug 'tpope/vim-vividchalk'
 Plug 'tpope/vim-fugitive'
-Plug 'robertmeta/nofrils'
+Plug 'TroyFletcher/vim-colors-synthwave'
 " Plug 'markonm/traces.vim'
 " if has('nvim')
 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -117,7 +120,6 @@ Plug 'mhinz/vim-startify'
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'lervag/vimtex', { 'for': 'tex' }
@@ -152,11 +154,8 @@ set autoindent
 " hopefully makes things faster?
 set ttyfast
 
-" colorscheme gruvbox 
-" colorscheme nord
-colorscheme nofrils-dark
-let g:nofrils_strbackgrounds = 1
-" let g:nofrils_heavycomments = 1
+" colorscheme nofrils-dark
+colorscheme synthwave
 
 " save all buffers when losing focus
 au FocusLost * :wa
@@ -228,3 +227,13 @@ noremap <silent> <Leader><ESC> :noh<CR>
 nnoremap <Backspace> <C-^>
 
 let g:ale_lint_on_text_changed = 'never'
+
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+set ignorecase
+set smartcase
+set incsearch
+
+nnoremap <Space> :
+nnoremap <silent> <ESC><ESC> :nohl<CR>

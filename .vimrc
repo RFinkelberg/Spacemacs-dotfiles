@@ -5,6 +5,9 @@ if has('gui_running')
   " set guifont=Terminus:h12
   set guioptions-=T
   set guioptions-=L
+  set guioptions-=R
+  set guioptions-=r
+  set guioptions-=m
 endif
 
 " syntax highlighting and line numbers
@@ -13,71 +16,72 @@ set number
 
 
 " spell check
-" set spell
-call plug#begin('~/.vim/plugged')
+set spell
+if has("gui_running")
+    call plug#begin('~/.vim/plugged')
 
-" Make sure you use single quotes
+    " Make sure you use single quotes
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' } 
-Plug 'tpope/vim-rsi'
-" Any valid git URL is allowed
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-Plug 'https://github.com/jiangmiao/auto-pairs.git'
-Plug 'tpope/vim-sensible'
-Plug 'morhetz/gruvbox'
-Plug 'justinmk/vim-sneak'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-" Plug 'w0rp/ale'
-Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-startify'
-Plug 'https://github.com/tpope/vim-vividchalk.git'
-" Plug 'https://github.com/ctrlpvim/ctrlp.vim.git', {'on': 'CtrlP'}
-Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'NLKNguyen/papercolor-theme'
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'lervag/vimtex'
-Plug 'junegunn/fzf', { 'on': 'FZF' }
-Plug 'junegunn/fzf.vim', { 'on': 'FZF' }
-" Initialize plugin system
+    " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+    Plug 'junegunn/vim-easy-align'
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' } 
+    " Any valid git URL is allowed
+    Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+    " if has('nvim')
+    "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " else
+    "   Plug 'Shougo/deoplete.nvim'
+    "   Plug 'roxma/nvim-yarp'
+    "   Plug 'roxma/vim-hug-neovim-rpc'
+    " endif
+    Plug 'https://github.com/jiangmiao/auto-pairs.git'
+    Plug 'tpope/vim-sensible'
+    Plug 'morhetz/gruvbox'
+    Plug 'justinmk/vim-sneak'
+    Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary'
+    Plug 'w0rp/ale'
+    " Plug 'airblade/vim-gitgutter'
+    Plug 'mhinz/vim-signify'
+    Plug 'mhinz/vim-startify'
+    Plug 'https://github.com/tpope/vim-vividchalk.git'
+    Plug 'https://github.com/ctrlpvim/ctrlp.vim.git', {'on': 'CtrlP'}
+    " Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+    Plug 'tpope/vim-fugitive'
+    Plug 'NLKNguyen/papercolor-theme'
+    " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'tpope/vim-vinegar'
+    Plug 'dracula/vim', {'as': 'dracula'}
+    " Plug 'lervag/vimtex', { 'for': 'tex' }
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
+    Plug 'davidhalter/jedi-vim'
+    " Initialize plugin system
 call plug#end()
- 
+colorscheme dracula 
+endif
+" let g:python3_host_prog = "C:\Users\rfink\Anaconda3\python.exe"
+" let g:deoplete#enable_at_startup = 1
+
+
 " More natural split management
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+tnoremap <C-J> <C-W><C-J>
+tnoremap <C-K> <C-W><C-K>
+tnoremap <C-L> <C-W><C-L>
+tnoremap <C-H> <C-W><C-H>
+
 
 set splitbelow
 set splitright
 
-" map ctrl+n to open nerdtree
-map <C-n> :NERDTreeToggle<CR>
 
-
-
-" let g:lightline = {
-" \ 'colorscheme': 'gruvbox',
-" \ }
-" let g:lightline = { 'colorscheme': 'challenger_deep' }
-
-" change and customize color scheme
-" colorscheme gruvbox
-" let g:gruvbox_contrast_dark = 'hard'
-" colorscheme challenger_deep
-colorscheme PaperColor 
 let g:PaperColor_Theme_Options = {
   \   'language': {
   \     'python': {
@@ -91,22 +95,18 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
-let g:lightline = {'colorscheme': 'PaperColor'}
-set background=light
+let g:lightline = {'colorscheme': 'one'}
+set background=dark
 " tabs -> 4 spaces
 set expandtab
 set tabstop=4
 set shiftwidth=4
 
-" syntax checker status line
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 " autosave
 set autoread
-set autowrite
-set autowriteall
+" set autowrite
+" set autowriteall
 
 set encoding=utf-8
 
@@ -141,7 +141,7 @@ inoremap jj <ESC>
 set nocompatible
 
 " flash screen on error instead of beeping
-"set visualbell
+set visualbell
 
 " keep 3 lines above and below cursor when scrolling
 set scrolloff=3
@@ -153,18 +153,15 @@ set autoindent
 set ttyfast
 
 " save all buffers when losing focus
-au FocusLost * :wa
+" au FocusLost * :wa
 au FocusGained * :redraw!
 
 " ctrlP config
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
 
-nnoremap <Leader>f :CtrlPCurFile<CR>
-" nnoremap <Leader>b :CtrlPBuffer<CR>
-nnoremap <Leader>p :CtrlP<CR>
+nnoremap <Leader>f :FZF<CR>
+nnoremap <Leader>fz :FZF<Space>~\
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>/ :Lines<CR>
 
 " ultisnips config
 let g:UltiSnipsExpandTrigger="<leader><tab>"
@@ -176,7 +173,9 @@ nnoremap <Leader>w :w<CR>
 inoremap <Leader>w :w<CR>
 
 " hide --insert-- 
-set noshowmode
+if has("gui_running")
+    set noshowmode
+endif
 
 " hide YCM preview window
 set completeopt-=preview
@@ -199,8 +198,8 @@ vnoremap > >gv
 " Make Y act more like D
 noremap Y y$
 
-" Better buffer navigation
-nnoremap <Leader>b :ls<CR>:b<Space>
+" Minimalistic buffer navigation
+" nnoremap <Leader>b :ls<CR>:b<Space>
 
 " Set triangular lightline separators
 let g:lightline.separator = {
@@ -209,10 +208,10 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
 	\   'left': '', 'right': '' 
   \}
-let g:lightline.mode_map         = {
-      \ 'n': 'N', 'i': 'I', 'R': 'R', 'v': 'V', 'V': 'V', "\<C-v>": 'V',
-      \ 'c': 'C', 's': 'S', 'S': 'S', "\<C-s>": 'S', 't': 'T',
-\ }
+" let g:lightline.mode_map         = {
+"       \ 'n': 'N', 'i': 'I', 'R': 'R', 'v': 'V', 'V': 'V', "\<C-v>": 'V',
+"       \ 'c': 'C', 's': 'S', 'S': 'S', "\<C-s>": 'S', 't': 'T',
+" \ }
 " disable startify cowsay header
 let g:startify_custom_header = []
 
@@ -222,8 +221,6 @@ nnoremap <down> :resize -5<cr>
 nnoremap <left> :vertical resize -5<cr>
 nnoremap <right> :vertical resize +5<cr>
 
-let g:deoplete#enable_at_startup = 1
-
 function! Tab_Or_Complete()
   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
     return "\<C-N>"
@@ -231,7 +228,16 @@ function! Tab_Or_Complete()
     return "\<Tab>"
   endif
 endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+" inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 set dictionary="/usr/dict/words"
 
 nnoremap <Backspace> <C-^>
+nnoremap <Space> :
+set incsearch
+set ignorecase
+set hlsearch
+set smartcase
+nnoremap <silent> <ESC><ESC> :noh<CR>
+"sethhrelativenumber
+
+tnoremap <Esc><Esc> <C-\><C-n>
